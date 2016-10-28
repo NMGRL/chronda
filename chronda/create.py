@@ -19,7 +19,9 @@
 # ============= local library imports  ==========================
 import os
 import shutil
+import ruamel_yaml
 
+from chronda import __version__
 from chronda.base.context import context
 from chronda.cli.user_input import get_user_confirmation
 from chronda.exceptions import ChrondaEnvironmentExistsError, ChrondaInvalidPackageURI, ChrondaInvalidPackage
@@ -62,6 +64,28 @@ def get_package_root(package_uri):
     else:
         raise ChrondaInvalidPackageURI(package_uri)
     return root
+
+
+def add_package(args):
+    p = os.path.join(context.active_env, '.info.yml')
+    if os.path.isfile(p):
+        with open(p, 'r') as rfile:
+            obj = ruamel_yaml.load(rfile)
+            packages = obj['packages']
+    else:
+        obj = {}
+        packages = []
+
+    if args.package in packages:
+        print 'package {} update to date'.format(args.package)
+        return
+    else:
+        packages.append(args.package)
+        obj['chronda_version'] = __version__
+        obj['packages']= packages
+        with open(p, 'w') as wfile:
+            ruamel_yaml.dump(obj, wfile)
+        return True
 
 
 def transfer_payload(args):

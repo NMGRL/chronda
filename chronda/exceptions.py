@@ -55,6 +55,10 @@ class ChrondaInvalidPackage(ChrondaError):
         self.message = 'Could not locate {}'.format(uri)
 
 
+class ChrondaBadPackageError(ChrondaError):
+    pass
+
+
 def exception_handler(func, *args, **kw):
     try:
         return_value = func(*args, **kw)

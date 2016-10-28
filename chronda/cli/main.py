@@ -56,7 +56,7 @@ def _main():
 
     # main_modules = ["info", "help", "list", "search", "create", "install", "update",
     #                 "remove", "config", "clean", "package"]
-    modules = ('create', 'info', 'help')
+    modules = ('create', 'check','build','upload', 'help')
     for suffix in modules:
         module = 'chronda.cli.main_{}'.format(suffix)
         imported = importlib.import_module(module)

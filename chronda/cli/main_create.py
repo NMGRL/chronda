@@ -19,7 +19,7 @@
 # ============= local library imports  ==========================
 from chronda.cli.common import add_parser_install, add_parser_yes
 from chronda.constants import NULL
-from chronda.create import create_env, transfer_payload, render_templates
+from chronda.create import create_env, transfer_payload, render_templates, add_package
 from ..utils import on_win
 
 help = "Create a new pychron environment from a list of specified packages. "
@@ -73,8 +73,9 @@ def configure_parser(sub_parsers):
 def execute(args, parser):
     if create_env(args):
         if args.package:
-            transfer_payload(args)
-            render_templates(args)
+            if add_package(args):
+                transfer_payload(args)
+                render_templates(args)
 
     # install(args, parser, 'create')
     # delete_trash()

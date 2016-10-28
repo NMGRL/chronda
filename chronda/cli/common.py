@@ -34,6 +34,7 @@ def add_parser_yes(p):
         help="Only display what would have been done.",
     )
 
+
 def add_parser_install(p):
     add_parser_prefix(p)
     p.add_argument('-p', '--package',
@@ -61,5 +62,10 @@ def add_parser_prefix(p):
     #     help="Full path to environment prefix (default: %s)." % context.default_prefix,
     #     metavar='PATH',
     # )
+
+
+def add_package(p):
+    p.add_argument('package_root',
+                   action='store')
 
 # ============= EOF =============================================
